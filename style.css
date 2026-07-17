@@ -1,0 +1,268 @@
+/* ============================
+   CAPILLA VIRTUAL
+============================ */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:
+    linear-gradient(180deg,#0a1d4d,#1d4f91,#4d8ac9);
+
+    min-height:100vh;
+
+    color:white;
+
+}
+
+.background{
+
+    position:fixed;
+
+    width:100%;
+    height:100%;
+
+    background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.20),transparent 30%),
+    radial-gradient(circle at 80% 10%,rgba(255,255,255,.12),transparent 25%),
+    radial-gradient(circle at 60% 80%,rgba(255,255,255,.08),transparent 35%);
+
+    z-index:-1;
+
+}
+
+header{
+
+    text-align:center;
+
+    padding:40px 20px;
+
+}
+
+header h1{
+
+    font-family:"Cinzel",serif;
+
+    font-size:48px;
+
+    color:#FFD76E;
+
+}
+
+header h2{
+
+    margin-top:10px;
+
+    font-weight:300;
+
+}
+
+main{
+
+    width:90%;
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding-bottom:60px;
+
+}
+
+.card{
+
+    margin:25px 0;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.10);
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+
+}
+
+/* CARRUSEL */
+
+.carousel{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:20px;
+
+}
+
+.carousel img{
+
+    width:100%;
+
+    max-width:550px;
+
+    height:700px;
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.45);
+
+}
+
+.arrow{
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:white;
+
+    color:#123c78;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+}
+
+.arrow:hover{
+
+    transform:scale(1.1);
+
+}
+
+.dots{
+
+    margin-top:15px;
+
+    text-align:center;
+
+}
+
+/* PETICIÓN */
+
+textarea{
+
+    width:100%;
+
+    height:130px;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    border:none;
+
+    resize:none;
+
+    font-size:16px;
+
+}
+
+button{
+
+    margin-top:20px;
+
+    padding:15px 30px;
+
+    border:none;
+
+    border-radius:40px;
+
+    background:#FFD76E;
+
+    color:#123c78;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+button:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* VELAS */
+
+#velas{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin-top:20px;
+
+    justify-content:center;
+
+}
+
+.vela{
+
+    font-size:38px;
+
+}
+
+/* ORACIONES */
+
+.oraciones{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+}
+
+.oracion{
+
+    flex:1;
+
+}
+
+#textoOracion{
+
+    margin-top:20px;
+
+    line-height:1.7;
+
+    font-size:18px;
+
+}
+
+/* FOOTER */
+
+footer{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#eeeeee;
+
+}
