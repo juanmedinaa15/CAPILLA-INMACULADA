@@ -1,200 +1,415 @@
-// ============================
-// CAPILLA VIRTUAL
-// ============================
+/* =====================================================
+   CAPILLA DE LA INMACULADA
+   FUNCIONALIDAD
+===================================================== */
 
-// ---------- CARRUSEL ----------
+
+/* =====================================================
+   CARRUSEL
+===================================================== */
 
 const totalImagenes = 6;
+
 let imagenActual = 1;
 
 const imagen = document.getElementById("virgen");
 const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 const dots = document.getElementById("dots");
+const imageFrame = document.querySelector(".image-frame");
 
-function actualizarImagen() {
-    imagen.src = `assets/imagenes/${imagenActual}.jpg`;
+function crearDots() {
 
     dots.innerHTML = "";
 
     for (let i = 1; i <= totalImagenes; i++) {
 
-        const punto = document.createElement("span");
+        const dot = document.createElement("span");
 
-        punto.innerHTML = "●";
+        dot.className = "dot";
 
-        punto.style.margin = "5px";
-
-        punto.style.cursor = "pointer";
-
-        punto.style.opacity = (i === imagenActual) ? "1" : ".3";
-
-        punto.onclick = () => {
-
-            imagenActual = i;
-
-            actualizarImagen();
-
+        if (i === imagenActual) {
+            dot.classList.add("active");
         }
 
-        dots.appendChild(punto);
+        dot.addEventListener("click", () => {
 
+            cambiarImagen(i);
+
+        });
+
+        dots.appendChild(dot);
+    }
+}
+
+
+function cambiarImagen(numero) {
+
+    if (numero < 1) {
+        numero = totalImagenes;
     }
 
+    if (numero > totalImagenes) {
+        numero = 1;
+    }
+
+    imagenActual = numero;
+
+    imageFrame.classList.add("changing");
+
+    setTimeout(() => {
+
+        imagen.src = `assets/imagenes/${imagenActual}.jpg`;
+
+        imagen.onload = () => {
+
+            imageFrame.classList.remove("changing");
+
+        };
+
+    }, 250);
+
+    crearDots();
 }
 
-next.onclick = () => {
 
-    imagenActual++;
+prev.addEventListener("click", () => {
 
-    if (imagenActual > totalImagenes)
-        imagenActual = 1;
+    cambiarImagen(imagenActual - 1);
 
-    actualizarImagen();
+});
 
-}
 
-prev.onclick = () => {
+next.addEventListener("click", () => {
 
-    imagenActual--;
+    cambiarImagen(imagenActual + 1);
 
-    if (imagenActual < 1)
-        imagenActual = totalImagenes;
+});
 
-    actualizarImagen();
-
-}
 
 setInterval(() => {
 
-    imagenActual++;
+    cambiarImagen(imagenActual + 1);
 
-    if (imagenActual > totalImagenes)
-        imagenActual = 1;
-
-    actualizarImagen();
-
-}, 7000);
-
-actualizarImagen();
+}, 8000);
 
 
-// ---------- VELAS ----------
+crearDots();
 
-const boton = document.getElementById("encender");
 
-const velas = document.getElementById("velas");
+/* =====================================================
+   DESLIZAR EN MÓVIL
+===================================================== */
 
-const peticion = document.getElementById("peticion");
+let touchStartX = 0;
+let touchEndX = 0;
 
-boton.onclick = () => {
+imageFrame.addEventListener("touchstart", (event) => {
 
-    const texto = peticion.value.trim();
+    touchStartX = event.changedTouches[0].screenX;
 
-    if (texto === "") {
+});
 
-        alert("Escribe primero una petición.");
 
+imageFrame.addEventListener("touchend", (event) => {
+
+    touchEndX = event.changedTouches[0].screenX;
+
+    const diferencia = touchEndX - touchStartX;
+
+    if (Math.abs(diferencia) < 40) {
         return;
+    }
+
+    if (diferencia < 0) {
+
+        cambiarImagen(imagenActual + 1);
+
+    } else {
+
+        cambiarImagen(imagenActual - 1);
 
     }
 
+});
+
+
+/* =====================================================
+   PETICIONES
+===================================================== */
+
+const botonEncender = document.getElementById("encender");
+const campoPeticion = document.getElementById("peticion");
+const contador = document.getElementById("contador");
+const altar = document.getElementById("velas");
+
+const modal = document.getElementById("petitionModal");
+const modalPetition = document.getElementById("modalPetition");
+const closeModal = document.getElementById("closeModal");
+
+
+/* CONTADOR DE CARACTERES */
+
+campoPeticion.addEventListener("input", () => {
+
+    contador.textContent =
+        `${campoPeticion.value.length} / 500`;
+
+});
+
+
+/* CREAR VELA */
+
+function crearVela(texto) {
+
     const vela = document.createElement("div");
 
-    vela.className = "vela";
+    vela.className = "candle";
 
-    vela.innerHTML = "🕯️";
+    vela.innerHTML = `
+        <div class="flame-glow"></div>
+        <div class="flame"></div>
+        <div class="wick"></div>
+        <div class="candle-body"></div>
+    `;
 
-    vela.title = texto;
+    vela.addEventListener("click", () => {
 
-    velas.prepend(vela);
+        modalPetition.textContent = texto;
 
-    peticion.value = "";
+        modal.classList.add("open");
 
+    });
+
+    altar.insertBefore(
+        vela,
+        document.querySelector(".altar-surface")
+    );
 }
 
 
-// ---------- ORACIONES ----------
+/* ENCENDER */
+
+botonEncender.addEventListener("click", () => {
+
+    const texto = campoPeticion.value.trim();
+
+    if (!texto) {
+
+        campoPeticion.focus();
+
+        campoPeticion.style.borderColor = "#c9a75d";
+
+        setTimeout(() => {
+
+            campoPeticion.style.borderColor = "";
+
+        }, 1500);
+
+        return;
+    }
+
+    crearVela(texto);
+
+    campoPeticion.value = "";
+
+    contador.textContent = "0 / 500";
+
+    document.querySelector(".altar-section")
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+});
+
+
+/* CERRAR MODAL */
+
+closeModal.addEventListener("click", () => {
+
+    modal.classList.remove("open");
+
+});
+
+
+document.querySelector(".modal-overlay").addEventListener("click", () => {
+
+    modal.classList.remove("open");
+
+});
+
+
+document.addEventListener("keydown", (event) => {
+
+    if (event.key === "Escape") {
+
+        modal.classList.remove("open");
+
+    }
+
+});
+
+
+/* =====================================================
+   ORACIONES
+===================================================== */
 
 const oraciones = {
 
-avemaria:
-
-`Dios te salve, María,
+    avemaria: `Dios te salve, María,
 llena eres de gracia;
 el Señor es contigo.
-Bendita tú eres entre todas las mujeres
+
+Bendita tú eres entre todas las mujeres,
 y bendito es el fruto de tu vientre, Jesús.
 
-Santa María,
-Madre de Dios,
-ruega por nosotros pecadores,
+Santa María, Madre de Dios,
+ruega por nosotros, pecadores,
 ahora y en la hora de nuestra muerte.
 
 Amén.`,
 
-salve:
+    salve: `Dios te salve, Reina y Madre de misericordia,
+vida, dulzura y esperanza nuestra.
 
-`Dios te salve,
-Reina y Madre de misericordia,
-vida, dulzura y esperanza nuestra.`,
+Dios te salve.
 
-angelus:
+A ti llamamos los desterrados hijos de Eva;
+a ti suspiramos, gimiendo y llorando,
+en este valle de lágrimas.
 
-`El Ángel del Señor anunció a María,
-y concibió por obra del Espíritu Santo.`,
+Ea, pues, Señora, abogada nuestra,
+vuelve a nosotros esos tus ojos misericordiosos.
 
-magnificat:
+Y después de este destierro,
+muéstranos a Jesús,
+fruto bendito de tu vientre.
 
-`Proclama mi alma la grandeza del Señor,
-se alegra mi espíritu en Dios mi Salvador.`,
+Oh clementísima, oh piadosa,
+oh dulce Virgen María.
 
-consagracion:
+Ruega por nosotros, Santa Madre de Dios,
+para que seamos dignos de alcanzar
+las promesas de Nuestro Señor Jesucristo.
 
-`Oh Señora mía,
+Amén.`,
+
+    angelus: `El Ángel del Señor anunció a María.
+
+— Y concibió por obra del Espíritu Santo.
+
+Dios te salve, María...
+
+He aquí la esclava del Señor.
+
+— Hágase en mí según tu palabra.
+
+Dios te salve, María...
+
+Y el Verbo se hizo carne.
+
+— Y habitó entre nosotros.
+
+Dios te salve, María...
+
+Ruega por nosotros, Santa Madre de Dios.
+
+— Para que seamos dignos de alcanzar
+las promesas de Jesucristo.
+
+Amén.`,
+
+    magnificat: `Proclama mi alma la grandeza del Señor,
+se alegra mi espíritu en Dios, mi Salvador.
+
+Porque ha mirado la humildad de su esclava.
+Desde ahora me felicitarán todas las generaciones.
+
+Porque el Poderoso ha hecho obras grandes en mí:
+su nombre es santo.
+
+Y su misericordia llega a sus fieles
+de generación en generación.`,
+
+    consagracion: `Oh Señora mía,
 oh Madre mía,
-yo me ofrezco enteramente a ti.`
 
-}
+yo me ofrezco enteramente a ti
+y en prueba de mi filial afecto
+te consagro en este día
+mis ojos, mis oídos, mi lengua,
+mi corazón;
 
-document.querySelectorAll(".oracion").forEach(boton=>{
+en una palabra, todo mi ser.
 
-    boton.onclick=()=>{
+Ya que soy todo tuyo,
+oh Madre de bondad,
+guárdame y defiéndeme
+como cosa y posesión tuya.
 
-        document.getElementById("textoOracion").innerText=
-        oraciones[boton.dataset.oracion];
-
-    }
-
-})
+Amén.`
+};
 
 
-// ---------- MÚSICA ----------
+document.querySelectorAll(".prayer-button").forEach((button) => {
 
-const audio=document.getElementById("audio");
+    button.addEventListener("click", () => {
 
-const musica=document.getElementById("musica");
+        const nombre = button.dataset.oracion;
 
-let reproduciendo=false;
+        const texto = document.getElementById("textoOracion");
 
-musica.onclick=()=>{
+        texto.textContent = oraciones[nombre];
 
-    if(reproduciendo){
+        texto.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    });
+
+});
+
+
+/* =====================================================
+   MÚSICA
+===================================================== */
+
+const audio = document.getElementById("audio");
+const musica = document.getElementById("musica");
+const musicText = document.getElementById("musicText");
+
+let reproduciendo = false;
+
+
+musica.addEventListener("click", () => {
+
+    if (!reproduciendo) {
+
+        audio.play()
+            .then(() => {
+
+                reproduciendo = true;
+
+                musicText.textContent = "Pausar";
+
+            })
+            .catch(() => {
+
+                musicText.textContent =
+                    "No se pudo reproducir";
+
+            });
+
+    } else {
 
         audio.pause();
 
-        musica.innerText="Reproducir música";
+        reproduciendo = false;
+
+        musicText.textContent = "Reproducir";
 
     }
 
-    else{
-
-        audio.play();
-
-        musica.innerText="Pausar música";
-
-    }
-
-    reproduciendo=!reproduciendo;
-
-}
+});

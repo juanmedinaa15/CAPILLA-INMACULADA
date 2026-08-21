@@ -5,176 +5,300 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Capilla Virtual - Inmaculada Concepción</title>
+    <title>Capilla de la Inmaculada Concepción</title>
 
-    <meta name="theme-color" content="#123c78">
+    <meta name="description"
+        content="Un espacio de oración y recogimiento ante la Inmaculada Concepción.">
+
+    <meta name="theme-color" content="#07152f">
 
     <link rel="manifest" href="manifest.json">
-
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-<div class="background"></div>
+    <div class="page-background">
+        <div class="light-beam light-beam-one"></div>
+        <div class="light-beam light-beam-two"></div>
+        <div class="stars"></div>
+    </div>
 
-<header>
+    <header class="site-header">
 
-    <h1>Capilla Virtual</h1>
+        <div class="cross-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+        </div>
 
-    <h2>Inmaculada Concepción</h2>
+        <p class="eyebrow">CAPILLA VIRTUAL</p>
 
-</header>
+        <h1>Inmaculada<br>Concepción</h1>
 
-<main>
+        <div class="ornament">
+            <span></span>
+            <i></i>
+            <span></span>
+        </div>
 
-    <!-- ===================== -->
-    <!-- CARRUSEL -->
-    <!-- ===================== -->
+        <p class="subtitle">
+            La he intentado mejorar. Espero que la estés usando y te guste
+        </p>
 
-    <section class="card">
+    </header>
 
-        <div class="carousel">
 
-            <button id="prev" class="arrow">
-                &#10094;
+    <main>
+
+        <!-- IMAGEN DE LA VIRGEN -->
+
+        <section class="virgin-section">
+
+            <div class="image-frame">
+
+                <div class="frame-corner top-left"></div>
+                <div class="frame-corner top-right"></div>
+                <div class="frame-corner bottom-left"></div>
+                <div class="frame-corner bottom-right"></div>
+
+                <img
+                    id="virgen"
+                    src="assets/imagenes/1.jpg"
+                    alt="Inmaculada Concepción">
+
+            </div>
+
+            <div class="carousel-controls">
+
+                <button id="prev" class="carousel-arrow" aria-label="Imagen anterior">
+                    <span></span>
+                </button>
+
+                <div id="dots" class="dots"></div>
+
+                <button id="next" class="carousel-arrow next-arrow" aria-label="Imagen siguiente">
+                    <span></span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- VELA -->
+
+        <section class="prayer-section">
+
+            <div class="section-heading">
+
+                <span class="small-line"></span>
+
+                <p>ORACIÓN</p>
+
+                <h2>Enciende una vela</h2>
+
+                <span class="heading-description">
+                    Presenta ante María aquello que llevas en el corazón.
+                </span>
+
+            </div>
+
+
+            <div class="candle-form">
+
+                <label for="peticion">
+                    Tu petición
+                </label>
+
+                <textarea
+                    id="peticion"
+                    maxlength="500"
+                    placeholder="Escribe aquí tu petición, oración o agradecimiento..."></textarea>
+
+                <div class="form-bottom">
+
+                    <span id="contador">0 / 500</span>
+
+                    <button id="encender" class="gold-button">
+                        <span>Encender la vela</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ALTAR -->
+
+        <section class="altar-section">
+
+            <div class="section-heading">
+
+                <span class="small-line"></span>
+
+                <p>ALTAR DE ORACIÓN</p>
+
+                <h2>Velas encendidas</h2>
+
+                <span class="heading-description">
+                    Cada luz representa una oración.
+                </span>
+
+            </div>
+
+            <div id="velas" class="altar">
+
+                <div class="altar-surface"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ORACIONES -->
+
+        <section class="prayers-section">
+
+            <div class="section-heading">
+
+                <span class="small-line"></span>
+
+                <p>DEVOCIÓN MARIANA</p>
+
+                <h2>Oraciones</h2>
+
+            </div>
+
+
+            <div class="prayer-list">
+
+                <button class="prayer-button" data-oracion="avemaria">
+                    <span>Ave María</span>
+                    <small>Oración mariana</small>
+                </button>
+
+                <button class="prayer-button" data-oracion="salve">
+                    <span>Salve</span>
+                    <small>Salve Regina</small>
+                </button>
+
+                <button class="prayer-button" data-oracion="angelus">
+                    <span>Ángelus</span>
+                    <small>Oración de la Encarnación</small>
+                </button>
+
+                <button class="prayer-button" data-oracion="magnificat">
+                    <span>Magníficat</span>
+                    <small>Cántico de María</small>
+                </button>
+
+                <button class="prayer-button" data-oracion="consagracion">
+                    <span>Consagración a María</span>
+                    <small>Entrega a la Madre de Dios</small>
+                </button>
+
+            </div>
+
+
+            <div id="textoOracion" class="prayer-text">
+
+                <p class="prayer-placeholder">
+                    Selecciona una oración.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- MÚSICA -->
+
+        <section class="music-section">
+
+            <div class="music-inner">
+
+                <div>
+                    <p class="music-label">MÚSICA</p>
+                    <h2>Silencio y recogimiento</h2>
+                </div>
+
+                <button id="musica" class="music-button">
+                    <span class="music-icon"></span>
+                    <span id="musicText">Reproducir</span>
+                </button>
+
+            </div>
+
+            <audio id="audio" loop>
+                <source src="assets/musica/maria.mp3" type="audio/mpeg">
+            </audio>
+
+        </section>
+
+    </main>
+
+
+    <!-- VENTANA DE LA PETICIÓN -->
+
+    <div id="petitionModal" class="modal">
+
+        <div class="modal-overlay"></div>
+
+        <div class="petition-card">
+
+            <button id="closeModal" class="close-modal" aria-label="Cerrar">
+                <span></span>
+                <span></span>
             </button>
 
-            <img
-                id="virgen"
-                src="assets/imagenes/1.jpg"
-                alt="Inmaculada Concepción">
+            <p class="modal-eyebrow">TU ORACIÓN</p>
 
-            <button id="next" class="arrow">
-                &#10095;
-            </button>
+            <div class="modal-ornament">
+                <span></span>
+                <i></i>
+                <span></span>
+            </div>
+
+            <p id="modalPetition" class="modal-petition"></p>
+
+            <p class="modal-footer">
+                Que María, Madre de Dios, interceda por esta intención.
+            </p>
 
         </div>
 
-        <div id="dots" class="dots"></div>
-
-    </section>
+    </div>
 
 
-    <!-- ===================== -->
-    <!-- VELA -->
-    <!-- ===================== -->
+    <footer>
 
-    <section class="card">
-
-        <h3>🕯️ Encender una vela</h3>
-
-        <textarea
-            id="peticion"
-            placeholder="Escribe aquí tu petición, oración o agradecimiento..."></textarea>
-
-        <button id="encender">
-
-            Encender vela
-
-        </button>
-
-    </section>
-
-
-    <!-- ===================== -->
-    <!-- GALERÍA DE VELAS -->
-    <!-- ===================== -->
-
-    <section class="card">
-
-        <h3>Velas encendidas</h3>
-
-        <div id="velas">
-
+        <div class="footer-ornament">
+            <span></span>
+            <i></i>
+            <span></span>
         </div>
 
-    </section>
+        <p>
+            Bajo tu amparo nos acogemos,<br>
+            Santa Madre de Dios.
+        </p>
+
+        <small>
+            Capilla Virtual de la Inmaculada Concepción
+        </small>
+
+    </footer>
 
 
-    <!-- ===================== -->
-    <!-- ORACIONES -->
-    <!-- ===================== -->
-
-    <section class="card">
-
-        <h3>🙏 Oraciones</h3>
-
-        <div class="oraciones">
-
-            <button class="oracion" data-oracion="avemaria">
-                Ave María
-            </button>
-
-            <button class="oracion" data-oracion="salve">
-                Salve
-            </button>
-
-            <button class="oracion" data-oracion="angelus">
-                Ángelus
-            </button>
-
-            <button class="oracion" data-oracion="magnificat">
-                Magnificat
-            </button>
-
-            <button class="oracion" data-oracion="consagracion">
-                Consagración
-            </button>
-
-        </div>
-
-        <div id="textoOracion">
-
-            Selecciona una oración.
-
-        </div>
-
-    </section>
-
-
-    <!-- ===================== -->
-    <!-- MÚSICA -->
-    <!-- ===================== -->
-
-    <section class="card">
-
-        <h3>🎵 Música</h3>
-
-        <button id="musica">
-
-            Reproducir música
-
-        </button>
-
-        <audio id="audio" loop>
-
-            <source src="assets/musica/maria.mp3" type="audio/mpeg">
-
-        </audio>
-
-    </section>
-
-</main>
-
-<footer>
-
-    <p>
-
-        Bajo tu amparo nos acogemos,
-        Santa Madre de Dios.
-
-    </p>
-
-</footer>
-
-<script src="app.js"></script>
+    <script src="app.js"></script>
 
 </body>
 
